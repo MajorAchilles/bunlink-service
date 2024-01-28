@@ -4,12 +4,12 @@ import { checkIfOpenVpnExists } from "./openvpn";
 let PORT:number = 3000;
 
 if (!Bun.env.PORT) {
-  throw new Error("PORT is not defined");
+  throw new Error(ERRORS.PORT_NOT_DEFINED);
 }
 
 let parsedPort = parseInt(Bun.env.PORT!);
 if (isNaN(parsedPort)) {
-  throw new Error("PORT is not a number");
+  throw new Error(ERRORS.PORT_NOT_NUMBER);
 }
 PORT = parsedPort;
 
