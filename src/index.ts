@@ -19,3 +19,11 @@ console.log(Bun.env.PORT);
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
+
+
+const initializeServer = async () => {
+  const intervalId = setInterval(async () => {
+    const isOpenVpnExisting = await checkIfOpenVpnExists();
+    console.log(isOpenVpnExisting);
+  }, 10000);
+}
