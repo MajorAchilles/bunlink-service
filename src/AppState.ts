@@ -1,6 +1,8 @@
+import { N } from "elysia/dist/index-kJIc86qB";
+
 type ApplicationState = {
   openVpnCheckInterval: number;
-  openVpnCheckIntervalId: number;
+  openVpnCheckIntervalId: NodeJS.Timeout | number;
   openVpnExists: boolean;
   openVpnConnected: boolean;
 };
@@ -14,7 +16,7 @@ class AppState {
   constructor() {
       if (!AppState.instance) {
           this.data = {
-            openVpnCheckInterval: 10000,
+            openVpnCheckInterval: 1000,
             openVpnCheckIntervalId: 0,
             openVpnExists: false,
             openVpnConnected: false,
@@ -69,7 +71,7 @@ class AppState {
    * @param {number} interval - The new value for the openVpnCheckInterval property.
    * @returns {void}
    */
-  getOpenVpnCheckIntervalId(): number {
+  getOpenVpnCheckIntervalId(): NodeJS.Timeout | number {
     return this.data?.openVpnCheckIntervalId || 0;
   }
 
@@ -79,7 +81,7 @@ class AppState {
    * @param {number} intervalId - The new value for the openVpnCheckIntervalId property.
    * @returns {void}
    */
-  setOpenVpnCheckIntervalId(intervalId: number): void {
+  setOpenVpnCheckIntervalId(intervalId: NodeJS.Timeout | number): void {
     this.data!.openVpnCheckIntervalId = intervalId;
   }
 
@@ -120,9 +122,18 @@ class AppState {
   setOpenVpnConnected(connected: boolean): void {
     this.data!.openVpnConnected = connected;
   }
+
+  /**
+   * Logs the current application state to the console.
+   * 
+   * @returns {void}
+   */
+  log(): void {
+    console.log(this.data);
+  }
 }
 
 const instance = new AppState();
 Object.freeze(instance);
 
-module.exports = instance;
+export default instance;

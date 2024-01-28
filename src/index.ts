@@ -1,5 +1,11 @@
 import { Elysia } from "elysia";
 import { checkIfOpenVpnExists } from "./openvpn";
+import appState from "./AppState";
+
+const initializeServer = async () => {
+  const appStateData = appState.get();
+  console.log(appStateData)
+}
 
 let PORT:number = 3000;
 
@@ -11,6 +17,7 @@ let parsedPort = parseInt(Bun.env.PORT!);
 if (isNaN(parsedPort)) {
   throw new Error(ERRORS.PORT_NOT_NUMBER);
 }
+
 PORT = parsedPort;
 
 const app = new Elysia().get("/", () => "Hello Elysia").listen(PORT);
@@ -20,10 +27,4 @@ console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
 
-
-const initializeServer = async () => {
-  const intervalId = setInterval(async () => {
-    const isOpenVpnExisting = await checkIfOpenVpnExists();
-    console.log(isOpenVpnExisting);
-  }, 10000);
-}
+await initializeServer();
