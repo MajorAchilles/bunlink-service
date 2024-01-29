@@ -18,7 +18,7 @@ const startServer = () => {
   const app = new Elysia().listen(PORT);
   
   console.log(
-    `Server is running at ${app.server?.hostname}:${app.server?.port} ✅`
+    `✅ Server is running at ${app.server?.hostname}:${app.server?.port}`
   );
 
   app.get("/", handleHealth);

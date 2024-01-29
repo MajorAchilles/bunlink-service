@@ -1,3 +1,5 @@
+import { ERRORS } from "./constants/labels";
+
 type ApplicationConfiguration = {
   port: number;
   ovpnCheckInterval: number;
