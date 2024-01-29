@@ -1,5 +1,3 @@
-import { OvpnStatus } from "./ovpnManager";
-
 type ApplicationConfiguration = {
   port: number;
   ovpnCheckInterval: number;
