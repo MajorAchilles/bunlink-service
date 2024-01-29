@@ -1,7 +1,8 @@
 import { N } from "elysia/dist/index-kJIc86qB";
 
 type ApplicationState = {
-  openVpnCheckInterval: number;
+  openVpnCheckIntervalGood: number;
+  openVpnCheckIntervalBad: number;
   openVpnCheckIntervalId: NodeJS.Timeout | number;
   openVpnExists: boolean;
   openVpnConnected: boolean;
@@ -16,7 +17,8 @@ class AppState {
   constructor() {
       if (!AppState.instance) {
           this.data = {
-            openVpnCheckInterval: 1000,
+            openVpnCheckIntervalGood: 10000,
+            openVpnCheckIntervalBad: 1000,
             openVpnCheckIntervalId: 0,
             openVpnExists: false,
             openVpnConnected: false,
@@ -47,23 +49,44 @@ class AppState {
   }
 
   /**
-   * Retrieves the value of the openVpnCheckInterval property from the application state.
+   * Retrieves the value of the openVpnCheckIntervalBad property from the application state.
    * 
-   * @returns {number} The value of the openVpnCheckInterval property, or 0 if it is not set.
+   * @returns {number} The value of the openVpnCheckIntervalBad property, or 0 if it is not set.
    */
-  getOpenVpnCheckInterval(): number {
-    return this.data?.openVpnCheckInterval || 0;
+  getOpenVpnCheckIntervalBad(): number {
+    return this.data?.openVpnCheckIntervalBad || 0;
   }
 
   /**
-   * Sets the value of the openVpnCheckInterval property in the application state.
+   * Sets the value of the openVpnCheckIntervalBad property in the application state.
    * 
-   * @param {number} interval - The new value for the openVpnCheckInterval property.
+   * @param {number} interval - The new value for the openVpnCheckIntervalBad property.
    * @returns {void}
    */
-  setOpenVpnCheckInterval(interval: number): void {
-    this.data!.openVpnCheckInterval = interval;
+  setOpenVpnCheckIntervalBad(interval: number): void {
+    this.data!.openVpnCheckIntervalBad = interval;
   }
+
+
+  /**
+   * Retrieves the value of the openVpnCheckIntervalGood property from the application state.
+   * 
+   * @returns {number} The value of the openVpnCheckIntervalGood property, or 0 if it is not set.
+   */
+  getOpenVpnCheckIntervalGood(): number {
+    return this.data?.openVpnCheckIntervalGood || 0;
+  }
+
+  /**
+   * Sets the value of the openVpnCheckIntervalGood property in the application state.
+   * 
+   * @param {number} interval - The new value for the openVpnCheckIntervalGood property.
+   * @returns {void}
+   */
+  setOpenVpnCheckIntervalGood(interval: number): void {
+    this.data!.openVpnCheckIntervalGood = interval;
+  }
+
 
   /**
    * Sets the value of the openVpnCheckInterval property in the application state.

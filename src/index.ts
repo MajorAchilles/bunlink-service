@@ -22,12 +22,13 @@ const startServer = () => {
   
   PORT = parsedPort;
   
-  const app = new Elysia().get("/", handleHealth).listen(PORT);
+  const app = new Elysia().listen(PORT);
   
-  console.log(Bun.env.PORT);
   console.log(
-    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+    `Server is running at ${app.server?.hostname}:${app.server?.port} ✅`
   );
+
+  app.get("/", handleHealth);
 };
 
 await initializeServer();
