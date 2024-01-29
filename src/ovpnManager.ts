@@ -17,11 +17,11 @@ const checkIfOpenVpnExists = async (): Promise<boolean> => {
 };
 
 const getOvpnStatus = async (): Promise<OvpnStatus> => {
-  if(await checkIfOpenVpnExists()) {
+  if(!await checkIfOpenVpnExists()) {
     return OvpnStatus.UNAVAILABLE;
   }
 
-  const status = await $`openvpn --version`.quiet();
+  const status = await $`openvpn --version`;
   if (status.exitCode !== 0) {
     return OvpnStatus.DISCONNECTED;
   }
