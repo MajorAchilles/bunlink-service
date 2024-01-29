@@ -1,27 +1,20 @@
 import { Elysia } from "elysia";
-import { checkIfOpenVpnExists } from "./openvpn";
 import appState from "./AppState";
+import appConfig from "./AppConfig";
 import { handleHealth } from "./api/health";
+import { getOvpnStatus } from "./ovpnManager";
 
 const initializeServer = async () => {
-  const appStateData = appState.get();
-  console.log(appStateData)
+  setInterval(async () => {
+    const openVpnStatus = await getOvpnStatus();
+    appState.setOpenVpnStatus(openVpnStatus)
+    appState.log();
+  }, appConfig.getOvpnCheckInterval());
 }
 
 const startServer = () => {
-  let PORT:number = 3000;
+  const PORT = appConfig.getPort();
 
-  if (!Bun.env.PORT) {
-    throw new Error(ERRORS.PORT_NOT_DEFINED);
-  }
-  
-  let parsedPort = parseInt(Bun.env.PORT!);
-  if (isNaN(parsedPort)) {
-    throw new Error(ERRORS.PORT_NOT_NUMBER);
-  }
-  
-  PORT = parsedPort;
-  
   const app = new Elysia().listen(PORT);
   
   console.log(
