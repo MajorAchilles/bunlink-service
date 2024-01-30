@@ -67,7 +67,7 @@ class AppState {
    * 
    * @returns {boolean} The value of the openVpnConnected property, or false if it is not set.
    */
-  getOpenVpnConnected(): OvpnStatus {
+  getOpenVpnStatus(): OvpnStatus {
     return this.data?.openVpnStatus || OvpnStatus.UNAVAILABLE;
   }
 

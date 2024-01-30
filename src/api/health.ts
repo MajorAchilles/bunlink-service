@@ -1,8 +1,6 @@
 import appState from "../AppState";
 
-const handleHealth = async ({ set  }) => {
-  set.headers["x-powered-by"] = "Elysia";
-
+const handleHealth = async () => {
   return {
     status: "OK",
     message: "Elysia is running.",
