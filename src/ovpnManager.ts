@@ -21,7 +21,7 @@ const getOvpnStatus = async (): Promise<OvpnStatus> => {
     return OvpnStatus.UNAVAILABLE;
   }
 
-  const status = await $`openvpn --version`;
+  const status = await $`ip a show tun0`.quiet();
   if (status.exitCode !== 0) {
     return OvpnStatus.DISCONNECTED;
   }
