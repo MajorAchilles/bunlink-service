@@ -29,8 +29,28 @@ const getOvpnStatus = async (): Promise<OvpnStatus> => {
   return OvpnStatus.CONNECTED;
 };
 
+const connectOpenVpn = async () => {
+  try {
+    await $`whoami`;
+    const ovpnPath = await $`which openvpn`.text();
+    const command = `sudo ${ovpnPath} --config ~/configs/ovpnconfig.ovpn`;
+    console.log(command);
+    const connect = await $`echo passwd | sudo -S -u ovpnmanager ${command}`;
+
+    if (connect.exitCode !== 0) {
+      throw new Error('Could not connect to OpenVPN.');
+    }
+  } catch (e) {
+    console.log(e);
+    throw new Error('Could not connect to OpenVPN.');
+  }
+
+  return true;
+}
+
 export {
   OvpnStatus,
   getOvpnStatus,
-  checkIfOpenVpnExists
+  checkIfOpenVpnExists,
+  connectOpenVpn,
 };

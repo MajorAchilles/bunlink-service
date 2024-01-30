@@ -3,7 +3,7 @@ import appState from "./AppState";
 import appConfig from "./AppConfig";
 import { handleHealth } from "./api/health";
 import { OvpnStatus, getOvpnStatus } from "./ovpnManager";
-import { returnOvpnStatus } from "./api/ovpn";
+import { connect, returnOvpnStatus } from "./api/ovpn";
 
 const initializeServer = async () => {
   setInterval(async () => {
@@ -27,6 +27,7 @@ const startServer = () => {
 
   app.get("/", handleHealth);
   app.get("/status", returnOvpnStatus)
+  app.post("/connect", connect)
   app.onError(console.log);
   console.log('✅ Routes are registered.')
   app.listen(PORT);

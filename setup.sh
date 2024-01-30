@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to create ovpnmanager user and configure sudo privileges
+# Script to create ovpnmanager user without a password and configure passwordless sudo for OpenVPN
 
 # Automatically determine the path to OpenVPN
 OPENVPN_PATH=$(which openvpn)
@@ -11,18 +11,21 @@ if [ -z "$OPENVPN_PATH" ]; then
     exit 1
 fi
 
-# Function to create the ovpnmanager user
+# Function to create the ovpnmanager user without a password
 create_ovpnmanager_user() {
-    sudo adduser --system --no-create-home --disabled-login ovpnmanager
+    sudo adduser --system --no-create-home --disabled-login --disabled-password ovpnmanager
 }
 
-# Function to configure sudo privileges
+# Function to configure passwordless sudo for OpenVPN
 configure_sudo() {
     # Creating a temporary file
     TMP_FILE=$(mktemp)
 
     # Writing the configuration to the temporary file
     echo "ovpnmanager ALL=(ALL) NOPASSWD: $OPENVPN_PATH" > "$TMP_FILE"
+
+    # Delete the existing configuration file if it exists
+    sudo rm -f /etc/sudoers.d/ovpnmanager
 
     # Moving the temporary file to sudoers.d directory
     sudo mv "$TMP_FILE" /etc/sudoers.d/ovpnmanager
